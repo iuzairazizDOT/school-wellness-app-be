@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
       }).save();
     }
 
-    const link = `https://screening-app-frontend.web.app/forgot-password/${admin._id}/${token.token}`;
+    const link = `https://school-wellness-app.web.app/forgot-password/${admin._id}/${token.token}`;
     await passwordResetEmail(admin.email, "Password Reset", link);
 
     res.send("password reset link sent to your email account");

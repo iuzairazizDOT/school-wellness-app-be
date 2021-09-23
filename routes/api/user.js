@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
     await user
       .save()
       .then((resp) => {
-        let link = `https://screening-app-frontend.web.app/consentform/${resp._id}/${req.body.firstName}/${req.body.lastName}/${req.body.email}`;
+        let link = `https://school-wellness-app.web.app/consentform/${resp._id}/${req.body.firstName}/${req.body.lastName}/${req.body.email}`;
         sendConsentFormEmail(req.body.email, "Fill Out Consent Form", link);
         return res.send(user);
       })
@@ -65,7 +65,7 @@ router.get("/:id", async (req, res) => {
     if (!user) return res.status(400).send("User with given id is not present");
     user.recieveEmail = "No";
     await user.save();
-    return res.redirect("https://screening-app-frontend.web.app/opt-out");
+    return res.redirect("https://school-wellness-app.web.app/opt-out");
   } catch {
     return res.status(400).send("Invalid Id"); // when id is inavlid
   }
