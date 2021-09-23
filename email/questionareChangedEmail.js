@@ -23,7 +23,7 @@ const questionareChangedEmail = async (subject, text) => {
     from: "vcsnotifications@safebusinesssolutions.com",
     to: sendAdminEmail,
     subject: subject,
-    html: `<h4>The Following User Have Changed Questionare :- </h4><br>${text}`,
+    html: `<h4>The Following User Have Changed Questionare : </h4><br>${text}`,
   };
 
   transporter.sendMail(message, function (err, info) {
