@@ -25,7 +25,7 @@ const passwordResetEmail = async (userEmail, subject, text) => {
     .send({
       template: `passwordResetTemplate`,
       message: {
-        from: "vcsnotifications@safebusinesssolutions.com",
+        from: "wellness@vistachristain.org ",
         to: `${userEmail}`,
       },
       locals: {

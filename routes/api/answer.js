@@ -40,6 +40,7 @@ router.post("/", async (req, res) => {
   try {
     let user = await User.findById(req.body.user);
     var currentTime = new Date();
+    var today = moment(currentTime).format("HH");
     let answer = await Answer.find({
       user: req.body.user,
       createdAt: {
@@ -47,41 +48,43 @@ router.post("/", async (req, res) => {
       },
     });
     console.log(answer);
+    console.log("CT", currentTime);
+    console.log("Today", today);
+    if (today > 00 && today < 15) {
+      if (user && answer.length < user.familyMembers.length + 1) {
+        let question = new Question();
+        question.QuestionOne = req.body.QuestionOne;
+        question.QuestionTwo = req.body.QuestionTwo;
+        question.QuestionThree = req.body.QuestionThree;
+        question.QuestionFour = req.body.QuestionFour;
+        question.userName = req.body.userName;
+        question
+          .save()
+          .then((resp) => {
+            answer = new Answer();
+            answer.user = req.body.user;
+            answer.familyMember = req.body.familyMember;
+            answer.question = resp._id;
+            answer.AnswerOne = req.body.AnswerOne;
+            answer.AnswerTwo = req.body.AnswerTwo;
+            answer.AnswerThree = req.body.AnswerThree;
+            answer.AnswerFour = req.body.AnswerFour;
+            answer.LastName = req.body.LastName;
+            answer.Grade = req.body.Grade;
+            // answer.Name = req.body.Name;
+            answer.Phone = req.body.Phone;
+            answer.PersonComp = req.body.PersonComp;
+            answer.Purpose = req.body.Purpose;
 
-    if (user && answer.length < user.familyMembers.length + 1) {
-      let question = new Question();
-      question.QuestionOne = req.body.QuestionOne;
-      question.QuestionTwo = req.body.QuestionTwo;
-      question.QuestionThree = req.body.QuestionThree;
-      question.QuestionFour = req.body.QuestionFour;
-      question.userName = req.body.userName;
-      question
-        .save()
-        .then((resp) => {
-          answer = new Answer();
-          answer.user = req.body.user;
-          answer.familyMember = req.body.familyMember;
-          answer.question = resp._id;
-          answer.AnswerOne = req.body.AnswerOne;
-          answer.AnswerTwo = req.body.AnswerTwo;
-          answer.AnswerThree = req.body.AnswerThree;
-          answer.AnswerFour = req.body.AnswerFour;
-          answer.LastName = req.body.LastName;
-          answer.Grade = req.body.Grade;
-          // answer.Name = req.body.Name;
-          answer.Phone = req.body.Phone;
-          answer.PersonComp = req.body.PersonComp;
-          answer.Purpose = req.body.Purpose;
-
-          if (
-            req.body.AnswerOne === "No" ||
-            req.body.AnswerTwo === "Yes" ||
-            req.body.AnswerThree === "Yes" ||
-            req.body.AnswerFour === "Yes"
-          ) {
-            adminEmail(
-              "Covid Symptoms Alert",
-              `<h3>User Deatils</h3><br>
+            if (
+              req.body.AnswerOne === "No" ||
+              req.body.AnswerTwo === "Yes" ||
+              req.body.AnswerThree === "Yes" ||
+              req.body.AnswerFour === "Yes"
+            ) {
+              adminEmail(
+                "Covid Symptoms Alert",
+                `<h3>User Deatils</h3><br>
                Name : ${req.body.LastName}<br>
                Name Person Completeing Screening : ${req.body.PersonComp}<br>
                Phone = ${req.body.Phone}<br>
@@ -90,22 +93,23 @@ router.post("/", async (req, res) => {
                
 
               Question 1 = ${req.body.AnswerOne} <br> Question 2 = ${req.body.AnswerTwo} <br> Question 3 = ${req.body.AnswerThree} <br> Question 4 = ${req.body.AnswerFour}`
-            );
-          }
-          answer
-            .save()
-            .then((resp) => {
-              return res.send(resp);
-              console.log("Last Name", req.body.LastName);
-            })
-            .catch((err) => {
-              return res.status(500).send({ error: err });
-            });
-        })
+              );
+            }
+            answer
+              .save()
+              .then((resp) => {
+                return res.send(resp);
+                console.log("Last Name", req.body.LastName);
+              })
+              .catch((err) => {
+                return res.status(500).send({ error: err });
+              });
+          })
 
-        .catch((err) => {
-          return res.status(500).send({ error: err });
-        });
+          .catch((err) => {
+            return res.status(500).send({ error: err });
+          });
+      }
     } else {
       return res.status(400).send("Expired Link Or Already Submitted Today ");
     }

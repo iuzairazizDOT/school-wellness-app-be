@@ -20,7 +20,7 @@ const sendAdminEmail = async (subject, text) => {
     sendAdminEmail.push(item.email);
   });
   message = {
-    from: "vcsnotifications@safebusinesssolutions.com",
+    from: "wellness@vistachristain.org ",
     to: sendAdminEmail,
     subject: "Warning!!!",
     html: `<h4>The Following User Have Covid Symptomns: <a src=${text}></a> </h4>`,

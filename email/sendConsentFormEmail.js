@@ -26,7 +26,7 @@ const sendConsentFormEmail = async (userEmail, subject, text) => {
     .send({
       template: `consentFormTemplate`,
       message: {
-        from: "vcsnotifications@safebusinesssolutions.com",
+        from: "wellness@vistachristain.org ",
         to: `${userEmail}`,
       },
       locals: {
