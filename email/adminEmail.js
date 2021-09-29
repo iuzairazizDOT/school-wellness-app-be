@@ -23,7 +23,7 @@ const sendAdminEmail = async (subject, text) => {
     from: "wellness@vistachristain.org ",
     to: sendAdminEmail,
     subject: "Warning!!!",
-    html: `<h4>The Following User Have Covid Symptomns: <a src=${text}></a> </h4>`,
+    html: `<h4>Please follow up with the following party on Wellness Screening. <a src=${text}></a> </h4>`,
   };
 
   transporter.sendMail(message, function (err, info) {
