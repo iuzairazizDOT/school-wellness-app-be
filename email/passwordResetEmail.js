@@ -7,8 +7,8 @@ const moment = require("moment");
 
 const passwordResetEmail = async (userEmail, subject, text) => {
   var transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
+    host: "smtpout.secureserver.net",
+    port: 465,
     auth: {
       user: config.get("email"),
       pass: config.get("password"),
@@ -25,7 +25,7 @@ const passwordResetEmail = async (userEmail, subject, text) => {
     .send({
       template: `passwordResetTemplate`,
       message: {
-        from: "wellness@vistachristain.org ",
+        from: "VCS - Vista Christian Hospital <no-reply@blog.com> ",
         to: `${userEmail}`,
       },
       locals: {

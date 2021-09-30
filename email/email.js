@@ -10,8 +10,8 @@ const emailSend = function () {
   // let date_ob = new Date();
   // let Date = year + "-" + month + "-" + date;
   var transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
+    host: "smtpout.secureserver.net",
+    port: 465,
     auth: {
       user: config.get("email"),
       pass: config.get("password"),
@@ -34,7 +34,7 @@ const emailSend = function () {
           .send({
             template: `defaultEmail`,
             message: {
-              from: "wellness@vistachristain.org ",
+              from: "VCS - Vista Christian Hospital <no-reply@blog.com>",
               to: `${item.email}`,
             },
             locals: {

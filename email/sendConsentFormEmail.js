@@ -8,8 +8,8 @@ const sendConsentFormEmail = async (userEmail, subject, text) => {
   let date = new Date();
   let FDate = moment(date, "hh").format("MM-DD-YYYY LT");
   var transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
+    host: "smtpout.secureserver.net",
+    port: 465,
     auth: {
       user: config.get("email"),
       pass: config.get("password"),
@@ -26,7 +26,7 @@ const sendConsentFormEmail = async (userEmail, subject, text) => {
     .send({
       template: `consentFormTemplate`,
       message: {
-        from: "wellness@vistachristain.org ",
+        from: "VCS - Vista Christian Hospital <no-reply@blog.com>",
         to: `${userEmail}`,
       },
       locals: {

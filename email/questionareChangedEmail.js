@@ -7,8 +7,8 @@ const questionareChangedEmail = async (subject, text) => {
   let date = new Date();
   let FDate = moment(date).format("MM-DD-YYYY");
   var transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
+    host: "smtpout.secureserver.net",
+    port: 465,
     auth: {
       user: config.get("email"),
       pass: config.get("password"),
@@ -20,7 +20,7 @@ const questionareChangedEmail = async (subject, text) => {
     sendAdminEmail.push(item.email);
   });
   message = {
-    from: "wellness@vistachristain.org ",
+    from: "VCS - Vista Christian Hospital <no-reply@blog.com> ",
     to: sendAdminEmail,
     subject: subject,
     html: `<h4>The Following User Have Changed Questionare : </h4><br>${text}`,

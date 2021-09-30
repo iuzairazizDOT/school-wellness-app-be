@@ -7,8 +7,8 @@ const sendAdminEmail = async (subject, text) => {
   let date = new Date();
   let FDate = moment(date).format("MM-DD-YYYY");
   var transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
+    host: "smtpout.secureserver.net",
+    port: 465,
     auth: {
       user: config.get("email"),
       pass: config.get("password"),
@@ -20,7 +20,7 @@ const sendAdminEmail = async (subject, text) => {
     sendAdminEmail.push(item.email);
   });
   message = {
-    from: "wellness@vistachristain.org ",
+    from: "VCS - Vista Christian Hospital <no-reply@blog.com> ",
     to: sendAdminEmail,
     subject: "Warning!!!",
     html: `<h4>Please follow up with the following party on Wellness Screening. <a src=${text}></a> </h4>`,
