@@ -34,7 +34,7 @@ const emailSend = function () {
           .send({
             template: `defaultEmail`,
             message: {
-              from: "VCS - Vista Christian Hospital <no-reply@blog.com>",
+              from: "VCS - Vista Christian School <no-reply@blog.com>",
               to: `${item.email}`,
             },
             locals: {

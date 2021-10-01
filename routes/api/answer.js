@@ -84,15 +84,15 @@ router.post("/", async (req, res) => {
             ) {
               adminEmail(
                 "Covid Symptoms Alert",
-                `<h3>User Deatils</h3><br>
-               Name : ${req.body.LastName}<br>
-               Name Person Completeing Screening : ${req.body.PersonComp}<br>
-               Phone = ${req.body.Phone}<br>
-               Purpose = ${req.body.Purpose}<br>
-               Grade = ${req.body.Grade}<brr>
+                `<h3 style="color : red">User Details</h3><br>
+               Name: ${req.body.LastName}<br>
+               Name Person Completeing Screening: ${req.body.PersonComp}<br>
+               Phone: ${req.body.Phone}<br>
+               Purpose: ${req.body.Purpose}<br>
+               Grade: ${req.body.Grade}<br>
                
 
-              Question 1 = ${req.body.AnswerOne} <br> Question 2 = ${req.body.AnswerTwo} <br> Question 3 = ${req.body.AnswerThree} <br> Question 4 = ${req.body.AnswerFour}`
+              Question 1: ${req.body.AnswerOne} <br> Question 2: ${req.body.AnswerTwo} <br> Question 3: ${req.body.AnswerThree} <br> Question 4: ${req.body.AnswerFour}`
               );
             }
             answer

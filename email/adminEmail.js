@@ -2,6 +2,7 @@ const nodemailer = require("nodemailer");
 var config = require("config");
 const { Admin } = require("../model/admin");
 const moment = require("moment");
+// const colors = require("colors");
 
 const sendAdminEmail = async (subject, text) => {
   let date = new Date();
@@ -20,10 +21,10 @@ const sendAdminEmail = async (subject, text) => {
     sendAdminEmail.push(item.email);
   });
   message = {
-    from: "VCS - Vista Christian Hospital <no-reply@blog.com> ",
+    from: "VCS - Vista Christian School <no-reply@blog.com> ",
     to: sendAdminEmail,
-    subject: "Warning!!!",
-    html: `<h4>Please follow up with the following party on Wellness Screening. <a src=${text}></a> </h4>`,
+    subject: `Wellness Screening Alert❗️❗️❗️ ⚠️`,
+    html: `<h4>Please follow up with the following party on Wellness Screening. ${text}  </h4>`,
   };
 
   transporter.sendMail(message, function (err, info) {

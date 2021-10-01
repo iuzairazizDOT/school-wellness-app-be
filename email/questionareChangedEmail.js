@@ -20,7 +20,7 @@ const questionareChangedEmail = async (subject, text) => {
     sendAdminEmail.push(item.email);
   });
   message = {
-    from: "VCS - Vista Christian Hospital <no-reply@blog.com> ",
+    from: "VCS - Vista Christian School <no-reply@blog.com> ",
     to: sendAdminEmail,
     subject: subject,
     html: `<h4>The Following User Have Changed Questionare : </h4><br>${text}`,
