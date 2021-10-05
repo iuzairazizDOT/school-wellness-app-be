@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
     await user
       .save()
       .then((resp) => {
-        let link = `https://school-wellness-app.web.app/consentform/${resp._id}/${req.body.firstName}/${req.body.lastName}/${req.body.email}`;
+        let link = `https://fe-school-wellness-app-ce562.ondigitalocean.app/consentform/${resp._id}/${req.body.firstName}/${req.body.lastName}/${req.body.email}`;
         sendConsentFormEmail(req.body.email, "Fill Out Consent Form", link);
         return res.send(user);
       })
