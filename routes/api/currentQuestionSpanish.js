@@ -35,7 +35,7 @@ router.post("/", auth, async (req, res) => {
       `
     username : ${req.body.userName}<br>
     click on below link to view changed questions<br>
-    https://school-wellness-app.web.app/question-spanish
+    https://fe-school-wellness-app-zmxnd.ondigitalocean.app/question-spanish
     `
     );
     await question.save();
