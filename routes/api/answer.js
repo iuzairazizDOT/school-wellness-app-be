@@ -19,7 +19,7 @@ router.get("/", auth, async (req, res) => {
   var startDate = moment(2021 + "-" + startMonth + "-" + 02 + " 00:00:00");
   var endDate = startDate.clone().endOf("month");
   if (startMonth != "") {
-    console.log("else", startMonth);
+//     console.log("else", startMonth);
     let monthDATE = {};
     monthDATE.$gte = startDate;
     monthDATE.$lte = endDate;
@@ -51,7 +51,7 @@ router.post("/", async (req, res) => {
     console.log("CT", currentTime);
     console.log("Today", today);
     if (today > 00 && today < 15) {
-      if (user && answer.length < user.familyMembers.length + 1) {
+      if (user && answer.length === 0) {
         let question = new Question();
         question.QuestionOne = req.body.QuestionOne;
         question.QuestionTwo = req.body.QuestionTwo;
