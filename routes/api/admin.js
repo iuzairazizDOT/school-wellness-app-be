@@ -14,7 +14,7 @@ router.get("/", auth, async function (req, res, next) {
   let page = Number(req.query.page ? req.query.page : 1);
   let perPage = Number(req.query.perPage ? req.query.perPage : 100);
   let skipRecords = perPage * (page - 1);
-  let admin = await Admin.find().sort({
+  let admin = await Admin.find({ userRole: "Admin" }).sort({
     createdAt: -1,
   });
 
