@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
       }).save();
     }
 
-    const link = `https://fe-school-wellness-app-ce562.ondigitalocean.app/forgot-password/${admin._id}/${token.token}`;
+    const link = `https://vcswellness.safebusinesssolutions.com/forgot-password/${admin._id}/${token.token}`;
     await passwordResetEmail(admin.email, "Password Reset", link);
 
     res.send("password reset link sent to your email account");
