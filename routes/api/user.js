@@ -30,7 +30,7 @@ router.post("/", async (req, res) => {
       email: req.body.email,
     });
     if (user)
-      return res.status(400).send("User With Given Email Already Exsists");
+      return res.status(400).send("User With Given Email Already Exists");
     user = new User(req.body);
     await user
       .save()
