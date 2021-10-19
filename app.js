@@ -64,10 +64,17 @@ app.use(function (err, req, res, next) {
 emailSend();
 
 mongoose
-  .connect(config.get("db"), {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    `mongodb+srv://${config.get("username")}:${config.get(
+      "passwordMongoDb"
+    )}@${config.get(
+      "host"
+    )}/schoolScreeningSystem?authSource=admin&replicaSet=db-mongodb-nyc3-49774&tls=true&tlsCAFile=certificate/ca-certificate.crt`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => {
     console.log("Connection Established");
   })
