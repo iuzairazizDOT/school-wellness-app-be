@@ -15,7 +15,7 @@ const sendAdminEmail = async (subject, text) => {
       pass: config.get("password"),
     },
   });
-  let admin = await Admin.find({ userRole: "Admin" );
+  let admin = await Admin.find({ userRole: "Admin" });
   let sendAdminEmail = [];
   admin.map((item) => {
     sendAdminEmail.push(item.email);

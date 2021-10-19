@@ -22,7 +22,7 @@ router.get("/", auth, async function (req, res, next) {
   return res.send(user);
 });
 
-/* Add New User . */
+/* Add New User with consent form mail. */
 router.post("/", async (req, res) => {
   if (req.body.userId === null || !req.body.userId) {
     console.log("body", req.body);
@@ -57,7 +57,40 @@ router.post("/", async (req, res) => {
   }
 });
 
-/* Update User . */
+/* Add New User . */
+router.post("/add", async (req, res) => {
+  if (req.body.userId === null || !req.body.userId) {
+    console.log("body", req.body);
+    let user = await User.findOne({
+      email: req.body.email,
+    });
+    if (user)
+      return res.status(400).send("User With Given Email Already Exists");
+    user = new User(req.body);
+    await user
+      .save()
+      .then((resp) => {
+        return res.send(user);
+      })
+      .catch((err) => {
+        return res.status(500).send({ error: err });
+      });
+  } else {
+    try {
+      let user = await User.findById(req.body.userId);
+      console.log(user);
+      if (!user)
+        return res.status(400).send("User with given id is not present");
+      user = extend(user, req.body);
+      await user.save();
+      return res.send(user);
+    } catch {
+      return res.status(400).send("Invalid Id"); // when id is inavlid
+    }
+  }
+});
+
+/* Update User consent. */
 router.get("/:id", async (req, res) => {
   try {
     let user = await User.findById(req.params.id);
@@ -79,6 +112,20 @@ router.delete("/:id", auth, async (req, res) => {
       return res.status(400).send("User with given id is not present"); // when there is no id in db
     }
     return res.send(user); // when everything is okay
+  } catch {
+    return res.status(400).send("Invalid Id"); // when id is inavlid
+  }
+});
+
+// Update User
+router.put("/:id", auth, async (req, res) => {
+  try {
+    let user = await User.findById(req.params.id);
+    console.log(user);
+    if (!user) return res.status(400).send("user with given id is not present");
+    user = extend(user, req.body);
+    await user.save();
+    return res.send(user);
   } catch {
     return res.status(400).send("Invalid Id"); // when id is inavlid
   }
