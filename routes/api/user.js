@@ -3,6 +3,7 @@ var router = express.Router();
 const { extend } = require("lodash");
 const { User } = require("../../model/user");
 const sendConsentFormEmail = require("../../email/sendConsentFormEmail");
+const emailAfterConsentForm = require("../../email/emailAfterConsentForm");
 
 sendConsentFormEmail;
 const auth = require("../../middlewares/auth");
@@ -18,6 +19,15 @@ router.get("/", auth, async function (req, res, next) {
   let user = await User.find().sort({
     createdAt: -1,
   });
+
+  return res.send(user);
+});
+
+router.get("/single-user/:id", async function (req, res, next) {
+  let page = Number(req.query.page ? req.query.page : 1);
+  let perPage = Number(req.query.perPage ? req.query.perPage : 100);
+  let skipRecords = perPage * (page - 1);
+  let user = await User.findById(req.params.id);
 
   return res.send(user);
 });
@@ -59,6 +69,7 @@ router.post("/", async (req, res) => {
 
 /* Add New User . */
 router.post("/add", async (req, res) => {
+  console.log(req.body);
   if (req.body.userId === null || !req.body.userId) {
     console.log("body", req.body);
     let user = await User.findOne({
@@ -70,6 +81,7 @@ router.post("/add", async (req, res) => {
     await user
       .save()
       .then((resp) => {
+        emailAfterConsentForm(req.body.email);
         return res.send(user);
       })
       .catch((err) => {
@@ -83,6 +95,7 @@ router.post("/add", async (req, res) => {
         return res.status(400).send("User with given id is not present");
       user = extend(user, req.body);
       await user.save();
+      emailAfterConsentForm(req.body.email);
       return res.send(user);
     } catch {
       return res.status(400).send("Invalid Id"); // when id is inavlid
@@ -101,6 +114,19 @@ router.get("/:id", async (req, res) => {
     return res.redirect("https://school-wellness-app.web.app/opt-out");
   } catch {
     return res.status(400).send("Invalid Id"); // when id is inavlid
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  try {
+    let user = await User.findById(req.params.id);
+    console.log(user);
+    if (!user) return res.status(400).send("User with given id is not present");
+    user = extend(user, req.body);
+    await user.save();
+    return res.send(user);
+  } catch {
+    return res.status(400).send("User Question Id"); // when id is inavlid
   }
 });
 
