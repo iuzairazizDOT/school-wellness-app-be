@@ -66,6 +66,7 @@ router.post("/", async (req, res) => {
           answer.AnswerThree = req.body.AnswerThree;
           answer.AnswerFour = req.body.AnswerFour;
           answer.LastName = req.body.LastName;
+          answer.FirstName = req.body.FirstName;
           answer.Grade = req.body.Grade;
           // answer.Name = req.body.Name;
           answer.Phone = req.body.Phone;
@@ -81,7 +82,7 @@ router.post("/", async (req, res) => {
             adminEmail(
               "Covid Symptoms Alert",
               `<h3>User Deatils</h3><br>
-               Name: ${req.body.LastName}<br>
+               Name: ${req.body.LastName} ${req.body.FirstName}<br>
                Name Person Completeing Screening: ${req.body.PersonComp}<br>
                Phone: ${req.body.Phone}<br>
                Purpos;e ${req.body.Purpose}<br>
