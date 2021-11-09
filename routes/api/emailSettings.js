@@ -48,13 +48,17 @@ router.put("/:id", async (req, res) => {
 });
 
 // Delete Email Settings
-router.delete("/:id", async (req, res) => {
+router.delete("/", async (req, res) => {
   try {
-    let emailsetting = await emailSetting.findByIdAndDelete(req.params.id);
-    if (!emailsetting) {
-      return res.status(400).send("Question with given id is not present"); // when there is no id in db
+    let emailsetting = await emailSetting.find();
+    console.log(emailsetting.length);
+    if (emailsetting.length !== 0) {
+      await emailSetting.deleteMany({});
+      return res.status(200).send("Reset Successfull");
+    } else {
+      return res.status(400).send("No Settings Found To Delete");
     }
-    return res.send(emailsetting); // when everything is okay
+    // when everything is okay
   } catch {
     return res.status(400).send("Invalid Question Id"); // when id is inavlid
   }
