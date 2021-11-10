@@ -19,7 +19,7 @@ const answerSchema = mongoose.Schema(
     AnswerFour: String,
     // Name: String,
     LastName: String,
-    FirstName: String,
+    // FirstName: String,
     Phone: String,
     PersonComp: String,
     Purpose: String,
