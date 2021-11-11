@@ -85,7 +85,7 @@ router.post("/", async (req, res) => {
           adminEmail(
             "Covid Symptoms Alert",
             `<h3 style="color : red">User Details</h3><br>
-               Name: ${req.body.LastName} ${req.body.FirstName}<br>
+               Name: ${req.body.LastName}<br>
                Name Person Completeing Screening: ${req.body.PersonComp}<br>
                Phone: ${req.body.Phone}<br>
                Purpose: ${req.body.Purpose}<br>
