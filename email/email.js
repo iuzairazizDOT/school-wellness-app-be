@@ -27,11 +27,7 @@ const emailSend = function () {
     let FDate = moment(date).format("YYYY MM DD");
     let FDDate = moment(date).format("dddd");
     let family = [];
-    // console.log("type", typeof emailsetting);
-    // console.log("type arr", typeof [1, 2, 3]);
-    // console.log(FDate);
     console.log(FDDate);
-    // console.log(emailsetting[0].Date.includes(FDate));
     if (emailsetting.length !== 0) {
       if (emailsetting[0].Date.includes(FDate)) {
         console.log("no need");
@@ -71,7 +67,7 @@ const emailSend = function () {
       }
     } else {
       if (FDDate !== "Saturday" || FDDate !== "Sunday") {
-        console.log("Yes Need");
+        console.log("Yes Need 1111");
         user
           .filter((item) => item.recieveEmail == "Yes")
           .map((item) => {
