@@ -69,9 +69,8 @@ router.post("/", async (req, res) => {
 
 /* Add New User . */
 router.post("/add", async (req, res) => {
-  console.log(req.body);
   if (req.body.userId === null || !req.body.userId) {
-    console.log("body", req.body);
+    console.log("One", req.body);
     let user = await User.findOne({
       email: req.body.email,
     });
@@ -81,7 +80,9 @@ router.post("/add", async (req, res) => {
     await user
       .save()
       .then((resp) => {
-        emailAfterConsentForm(req.body.email);
+        if (req.body.recieveEmail === "Yes") {
+          emailAfterConsentForm(req.body.email);
+        }
         return res.send(user);
       })
       .catch((err) => {
@@ -90,12 +91,14 @@ router.post("/add", async (req, res) => {
   } else {
     try {
       let user = await User.findById(req.body.userId);
-      console.log(user);
+      console.log("Two", req.body);
       if (!user)
         return res.status(400).send("User with given id is not present");
       user = extend(user, req.body);
       await user.save();
-      emailAfterConsentForm(req.body.email);
+      if (req.body.recieveEmail === "Yes") {
+        emailAfterConsentForm(req.body.email);
+      }
       return res.send(user);
     } catch {
       return res.status(400).send("Invalid Id"); // when id is inavlid
@@ -128,6 +131,21 @@ router.put("/:id", async (req, res) => {
     return res.send(user);
   } catch {
     return res.status(400).send("User Question Id"); // when id is inavlid
+  }
+});
+/* Delete All Users . */
+router.delete("/all-user", auth, async (req, res) => {
+  try {
+    let user = await User.deleteMany({});
+    console.log(user);
+    if (user.deletedCount === 0) {
+      return res.status(400).send("No User Found To Delete"); // when there is no id in db
+    } else {
+      return res.status(200).send("All Users Deleted Successfully"); // when everything is okay
+    }
+  } catch (err) {
+    console.log(err);
+    // return res.status(400).send("Invalid Id"); // when id is inavlid
   }
 });
 

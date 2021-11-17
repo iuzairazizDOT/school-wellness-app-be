@@ -132,14 +132,28 @@ router.put("/:id", auth, async (req, res) => {
     return res.status(400).send("Invalid Answer Id"); // when id is inavlid
   }
 });
+//Delete All Records
+router.delete("/", auth, async (req, res) => {
+  try {
+    let answer = await Answer.deleteMany({});
+    console.log(answer);
+    if (answer.deletedCount === 0) {
+      return res.status(400).send("No Records Found To Delete"); // when there is no id in db
+    } else {
+      return res.status(200).send("All Records Deleted Successfully"); // when everything is okay
+    }
+  } catch {
+    return res.status(400).send("Invalid Id"); // when id is inavlid
+  }
+});
 
 // Delete Monthly Answers
 router.delete("/monthly", auth, async (req, res) => {
   let newDate = new Date();
-  var first_date = new Date(newDate.getFullYear(), newDate.getMonth() - 1, 2);
-  var last_date = new Date(newDate.getFullYear(), newDate.getMonth(), 1);
-  // console.log("mnth", last_date);
-  // console.log("mnth1", first_date);
+  var first_date = new Date(newDate.getFullYear(), newDate.getMonth(), 2);
+  var last_date = new Date(newDate.getFullYear(), newDate.getMonth() + 0, 1);
+  console.log("mnth", last_date);
+  console.log("mnth1", first_date);
 
   try {
     let answer1 = await Answer.deleteMany({
@@ -148,13 +162,15 @@ router.delete("/monthly", auth, async (req, res) => {
         $gte: first_date,
       },
     });
-    if (!answer1) {
-      return res.status(400).send("No Records To Delete In Previous Month"); // when there is no id in db
-    }
-    return res.send(answer1); // when everything is okay
+    console.log(typeof answer1);
+    if (answer1.deletedCount === 0) {
+      return res.status(200).send("No Records To Delete"); // when there is no id in db
+    } else {
+      return res.status(200).send("Records Deleted Successfully");
+    } // when everything is okay
   } catch (err) {
     console.log("error", err);
-    return res.status(400).send("Error"); // when id is inavlid
+    return res.status(200).send("Error"); // when id is inavlid
   }
 });
 
