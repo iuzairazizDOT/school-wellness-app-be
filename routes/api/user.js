@@ -127,7 +127,9 @@ router.put("/:id", async (req, res) => {
     if (!user) return res.status(400).send("User with given id is not present");
     user = extend(user, req.body);
     await user.save();
-    emailAfterConsentForm(req.body.email);
+    if (user.recieveEmail === "Yes") {
+      emailAfterConsentForm(req.body.email);
+    }
     return res.send(user);
   } catch {
     return res.status(400).send("User Question Id"); // when id is inavlid
