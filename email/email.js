@@ -30,9 +30,11 @@ const emailSend = function () {
     console.log(FDDate);
     if (emailsetting.length !== 0) {
       if (emailsetting[0].Date.includes(FDate)) {
-        console.log("no need");
+        console.log("no need 2");
       } else {
-        if (FDDate !== "Saturday" || FDDate !== "Sunday") {
+        if (FDDate === "Saturday" || FDDate === "Sunday") {
+          console.log("No needddd");
+        } else {
           console.log("Yes needddd");
           user
             .filter((item) => item.recieveEmail == "Yes")
@@ -61,12 +63,12 @@ const emailSend = function () {
                 })
                 .then(() => console.log(`email has been sent! ${item.email}`));
             });
-        } else {
-          console.log("No needdd");
         }
       }
     } else {
-      if (FDDate !== "Saturday" || FDDate !== "Sunday") {
+      if (FDDate === "Saturday" || FDDate === "Sunday") {
+        console.log("No need 1");
+      } else {
         console.log("Yes Need 1111");
         user
           .filter((item) => item.recieveEmail == "Yes")
@@ -125,8 +127,6 @@ const emailSend = function () {
         //   });
         // }
         // });
-      } else {
-        console.log("No need");
       }
     }
   });
