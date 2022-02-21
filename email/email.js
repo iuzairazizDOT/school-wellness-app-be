@@ -36,33 +36,42 @@ const emailSend = function () {
           console.log("No needddd");
         } else {
           console.log("Yes needddd");
-          user
+          const promises = user
             .filter((item) => item.recieveEmail == "Yes")
-            .map((item) => {
-              item.familyMembers.map((item) => {
-                family.push(item.familyDetails);
-              });
-              const email = new Email({
-                transport: transporter,
-                send: true,
-                preview: false,
-              });
-              email
-                .send({
-                  template: `defaultEmail`,
-                  message: {
-                    from: "VCS - Vista Christian School <no-reply@blog.com>",
-                    to: `${item.email}`,
-                  },
-                  locals: {
-                    ID: `${item._id}`,
-                    FDATE: `${LDate}`,
-                    USERNAME: `${item.lastName} ${item.firstName}`,
-                    FAMILYMEMBER: family,
-                  },
-                })
-                .then(() => console.log(`email has been sent! ${item.email}`));
-            });
+            .map(
+              (item, i) =>
+                new Promise((resolve) =>
+                  setTimeout(() => {
+                    item.familyMembers.map((item) => {
+                      family.push(item.familyDetails);
+                    });
+                    const email = new Email({
+                      transport: transporter,
+                      send: true,
+                      preview: false,
+                    });
+                    email
+                      .send({
+                        template: `defaultEmail`,
+                        message: {
+                          from: "VCS - Vista Christian School <no-reply@blog.com>",
+                          to: `${item.email}`,
+                        },
+                        locals: {
+                          ID: `${item._id}`,
+                          FDATE: `${LDate}`,
+                          USERNAME: `${item.lastName} ${item.firstName}`,
+                          FAMILYMEMBER: family,
+                        },
+                      })
+                      .then(() =>
+                        console.log(`email has been sent! ${item.email}`)
+                      );
+                    resolve();
+                  }, 1000 * user.length - 1000 * i)
+                )
+            );
+          Promise.all(promises).then(() => console.log("done"));
         }
       }
     } else {
@@ -70,34 +79,42 @@ const emailSend = function () {
         console.log("No need 1");
       } else {
         console.log("Yes Need 1111");
-        user
+        const promises = user
           .filter((item) => item.recieveEmail == "Yes")
-          .map((item) => {
-            item.familyMembers.map((item) => {
-              family.push(item.familyDetails);
-            });
-            const email = new Email({
-              transport: transporter,
-              send: true,
-              preview: false,
-            });
-            email
-              .send({
-                template: `defaultEmail`,
-                message: {
-                  from: "VCS - Vista Christian School <no-reply@blog.com>",
-                  to: `${item.email}`,
-                },
-                locals: {
-                  ID: `${item._id}`,
-                  FDATE: `${LDate}`,
-                  USERNAME: `${item.lastName} ${item.firstName}`,
-                  FAMILYMEMBER: family,
-                },
-              })
-              .then(() => console.log(`email has been sent! ${item.email}`));
-          });
-
+          .map(
+            (item, i) =>
+              new Promise((resolve) =>
+                setTimeout(() => {
+                  item.familyMembers.map((item) => {
+                    family.push(item.familyDetails);
+                  });
+                  const email = new Email({
+                    transport: transporter,
+                    send: true,
+                    preview: false,
+                  });
+                  email
+                    .send({
+                      template: `defaultEmail`,
+                      message: {
+                        from: "VCS - Vista Christian School <no-reply@blog.com>",
+                        to: `${item.email}`,
+                      },
+                      locals: {
+                        ID: `${item._id}`,
+                        FDATE: `${LDate}`,
+                        USERNAME: `${item.lastName} ${item.firstName}`,
+                        FAMILYMEMBER: family,
+                      },
+                    })
+                    .then(() =>
+                      console.log(`email has been sent! ${item.email}`)
+                    );
+                  resolve();
+                }, 1000 * user.length - 1000 * i)
+              )
+          );
+        Promise.all(promises).then(() => console.log("done"));
         // if (item.familyMembers[0].familyDetails != "") {
         //   item.familyMembers.map((familyMember) => {
         //     const email = new Email({
